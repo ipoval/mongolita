@@ -1,2 +1,5 @@
+Example:
+  a. ./mongo ~/github/mongolita/mongolita.js
+
 TODO: OOP interface
 TODO: write spec
