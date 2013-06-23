@@ -1,3 +1,5 @@
+** mongodb custom shell analytics tools and functions
+
 Example:
   a. ./mongo ~/github/mongolita/mongolita.js
 

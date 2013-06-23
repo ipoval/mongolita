@@ -9,6 +9,15 @@
 
     callback_fn();
   };
+
+  this.print_header = function print_header() {
+    print('\nMongolita - mongodb custom shell analytics tools and functions\n');
+    print('DB name: ' + this.working_db.getName() + ' | MongoDB: ' + this.working_db.version() + '\n');
+  };
+
+  this.print_server_info = function print_server_info() {
+    this.working_db.serverStatus();
+  };
 })();
 
 mongodb_connect(
@@ -16,8 +25,8 @@ mongodb_connect(
   default_port,
   default_db_name,
   function() {
-    print('Connected to ...' + this.working_db.getName());
-    print('`db.serverStatus();`');
+    print_header();
+    print_server_info();
   }
 );
 
