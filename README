@@ -1,7 +1,8 @@
-** mongodb custom shell analytics tools and functions
+MONGODB CUSTOM SHELL ANALYTICS TOOLS AND FUNCTIONS
 
-Example:
-  a. ./mongo ~/github/mongolita/mongolita.js
+Run:
+  ./mongo --shell ~/github/mongolita/mongolita.js
 
+TODO: add install binary to add proper load paths to ~/.mongors.js
 TODO: OOP interface
 TODO: write spec
