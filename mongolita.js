@@ -29,6 +29,3 @@ mongodb_connect(
     print_server_info();
   }
 );
-
-// load('./lib/mdb.indexes.js');
-// load('./lib/mdb.operations.js');
