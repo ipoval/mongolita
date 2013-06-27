@@ -48,7 +48,6 @@ load('#{root_js}');
   end
 end
 
-
 mongolita = Mongolita.new(
   File.join(ENV['HOME'], '.mongorc.js'),
   File.expand_path('../../mongolita.js', __FILE__),
