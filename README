@@ -3,7 +3,6 @@ MONGODB EXTENDED SHELL ANALYTICS TOOLS AND FUNCTIONS
 Run:
   ./mongo --shell ~/github/mongolita/mongolita.js
 
-TODO: add to PROFILING the top_slowest_operations (for example: 10 slowest in desc order)
 TODO: add install binary to add proper load paths to ~/.mongors.js
 TODO: OOP interface
 TODO: write spec
