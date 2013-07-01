@@ -2,58 +2,62 @@
 
 # encoding: utf-8
 
-require 'find'
+if __FILE__ == $0
 
-class Mongolita < Struct.new(:mongorc, :root_js, :lib_dir)
-  attr :stoken, :etoken, :rstoken, :retoken, :includes
+  require 'find'
 
-  def install
-    @stoken, @etoken   = '// DO mongolita', '// DONE mongolita'
-    @rstoken, @retoken = Regexp.escape(stoken), Regexp.escape(etoken)
-    prune_itself
-    mongorc_append
+  class Mongolita < Struct.new(:mongorc, :root_js, :lib_dir)
+    attr :stoken, :etoken, :rstoken, :retoken, :includes
+
+    def install
+      @stoken, @etoken   = '// DO mongolita', '// DONE mongolita'
+      @rstoken, @retoken = Regexp.escape(stoken), Regexp.escape(etoken)
+      prune_itself
+      mongorc_append
+    end
+
+    private
+
+    def prune_itself
+      File.write mongorc, read_mongorc.gsub(/^#{rstoken}.*#{retoken}$/im, '').rstrip
+    end
+
+    def mongorc_append
+      on_exist_fail
+
+      @includes = Find.find(lib_dir).lazy.select { |js| FileTest.file?(js) }
+      File.open(mongorc, 'a+') { |f| f.write_nonblock js_header }
+    end
+
+    def on_exist_fail
+      fail "Check #{mongorc}" if read_mongorc =~ /#{rstoken}/i
+    end
+
+    def read_mongorc; File.read(mongorc); end
+
+    def libs_js
+      includes.map { |js| "load('#{js}');" }.to_a.join("\n").chomp
+    end
+
+    def js_header
+      js = <<-JS
+  \n
+  #{stoken}
+  load('#{root_js}');
+  #{libs_js}
+  #{etoken}
+      JS
+    end
   end
 
-  private
+  mongolita = Mongolita.new(
+    File.join(ENV['HOME'], '.mongorc.js'),
+    File.expand_path('../../mongolita.js', __FILE__),
+    File.expand_path('../../lib', __FILE__)
+  )
 
-  def prune_itself
-    File.write mongorc, read_mongorc.gsub(/^#{rstoken}.*#{retoken}$/im, '').rstrip
-  end
+  mongolita.install
 
-  def mongorc_append
-    on_exist_fail
-
-    @includes = Find.find(lib_dir).lazy.select { |js| FileTest.file?(js) }
-    File.open(mongorc, 'a+') { |f| f.write_nonblock js_header }
-  end
-
-  def on_exist_fail
-    fail "Check #{mongorc}" if read_mongorc =~ /#{rstoken}/i
-  end
-
-  def read_mongorc; File.read(mongorc); end
-
-  def libs_js
-    includes.map { |js| "load('#{js}');" }.to_a.join("\n").chomp
-  end
-
-  def js_header
-    js = <<-JS
-\n
-#{stoken}
-load('#{root_js}');
-#{libs_js}
-#{etoken}
-    JS
-  end
 end
-
-mongolita = Mongolita.new(
-  File.join(ENV['HOME'], '.mongorc.js'),
-  File.expand_path('../../mongolita.js', __FILE__),
-  File.expand_path('../../lib', __FILE__)
-)
-
-mongolita.install
 
 __END__
