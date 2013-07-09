@@ -7,7 +7,7 @@ class ServerSettings < Hash
 end
 
 $server_settings = ServerSettings.new
-$server_settings[:mdb_path] = File.join('/Users', ENV['USER'], 'mongodb/bin')
+$server_settings[:mdb_path] = File.join('/Users', ENV['USER'], 'bin/mongodb')
 $server_settings.freeze
 
 RSpec.configure do |conf|
