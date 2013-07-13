@@ -1,5 +1,8 @@
 MONGODB EXTENDED SHELL ANALYTICS TOOLS AND FUNCTIONS
 
+* uses ~/.mongorc.js to preload the libraries
+* use mongo --norc to skip loading ~/.mongorc.js
+
 Run:
   ./mongo --shell ~/github/mongolita/mongolita.js
 
