@@ -7,5 +7,6 @@ Usage
   1 /path/to/this/gem/bin/mongolita-install
   2 ./mongo
 
+TODO: add stats for top 10 padding factors for collections
 TODO: OOP api
 TODO: specs
