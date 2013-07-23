@@ -11,11 +11,14 @@ describe 'mdb.indexes.js' do
     end
 
     specify 'returns the list of index sizes per collection sorted by size desc' do
-       run_mongo('var objects = []; for(var i = 0; i < 1000; ++i) { objects.push({ key: i }); }; db.test.insert(objects); db.test.ensureIndex( { key: 1 } );')
+      run_mongo('var objects = []; for(var i = 0; i < 1000; ++i) { objects.push({ key: i }); }; db.test.insert(objects); db.test.ensureIndex( { key: 1 } );')
 
-       exec = run_mongo 'total_index_size_per_collection();'
+      result = run_mongo 'printjson(total_index_size_per_collection());'
 
-       p exec
+      puts result
+      result.should include '"collection" : "test"'
+      result.should include '"collection" : "system.indexes"'
+      result.should include '"MB" : "0.000"'
     end
   end
 end
