@@ -4,7 +4,7 @@ describe 'mdb.indexes.js' do
   let(:lib_path) { File.expand_path('../../lib/mdb.indexes.js', __FILE__) }
 
   describe 'function total_index_size_per_collection()' do
-    specify 'gets defined in mongo shell' do
+    specify 'defined in mongo shell' do
       exec = run_mongo 'typeof(total_index_size_per_collection);'
 
       exec.should eq 'function'
@@ -19,6 +19,14 @@ describe 'mdb.indexes.js' do
       result.should include '"collection" : "test"'
       result.should include '"collection" : "system.indexes"'
       result.should include '"MB" : "0.000"'
+    end
+  end
+
+  describe 'ls_single_index_collections' do
+    specify 'defined in mongo shell' do
+      exec = run_mongo 'typeof(total_index_size_per_collection);'
+
+      exec.should eq 'function'
     end
   end
 end
