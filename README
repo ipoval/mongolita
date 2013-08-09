@@ -7,7 +7,9 @@ Usage
   1 /path/to/this/gem/bin/mongolita-install
   2 ./mongo
 
-TODO: add stats for top 10 padding factors for collections
-TODO: OOP api
-TODO: add Travis CI
-TODO: specs
+TODOs
+  1 add stats for top 10 padding factors on collections
+  2 OOP api
+  3 add Travis CI with MongoDB datastore for testing
+      http://about.travis-ci.org/docs/user/database-setup/#MongoDB
+  4 specs
