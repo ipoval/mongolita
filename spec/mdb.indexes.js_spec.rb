@@ -5,15 +5,24 @@ describe 'mdb.indexes.js' do
 
   describe 'total_index_size_per_collection()' do
     specify 'defined in mongo shell' do
-      exec = run_mongo 'typeof(total_index_size_per_collection);'
+      exec = eval_mongo 'typeof(total_index_size_per_collection);'
 
       exec.should eq 'function'
     end
 
-    specify 'returns the list of index sizes per collection sorted by size desc' do
-      run_mongo('var objects = []; for(var i = 0; i < 1000; ++i) { objects.push({ key: i }); }; db.test.insert(objects); db.test.ensureIndex( { key: 1 } );')
+    let(:js_insert) {
+      js = <<-JS
+        var objects = [];
+        for(var i = 0; i < 100; ++i) { objects.push({ key: i }); };
+        db.test.insert(objects);
+        db.test.ensureIndex( { key: 1 } );
+      JS
+    }
 
-      out = run_mongo 'printjson(total_index_size_per_collection());'
+    specify 'returns the list of index sizes per collection sorted by size desc' do
+      eval_mongo js_insert
+
+      out = eval_mongo 'printjson(total_index_size_per_collection());'
 
       puts out
       out.should include '"collection" : "test"'
@@ -24,16 +33,21 @@ describe 'mdb.indexes.js' do
 
   describe 'single_index_collections()' do
     specify 'defined in mongo shell' do
-      exec = run_mongo 'typeof(single_index_collections);'
+      out = eval_mongo 'typeof(single_index_collections);'
 
-      exec.should eq 'function'
+      out.should eq 'function'
     end
 
+    let(:drop_index_js) { 'db.test.dropIndex( { key: 1 } );' }
+
     specify 'returns the list of collections with a single index' do
-      out = run_mongo 'printjson(single_index_collections());'
+      eval_mongo drop_index_js
+
+      out = eval_mongo 'printjson(single_index_collections());'
 
       puts out
       out.should include '"collection" : "test"'
+      out.should include '"index_key" : { "_id" : 1 }'
     end
   end
 end
