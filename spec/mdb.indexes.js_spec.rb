@@ -3,7 +3,7 @@ require_relative 'spec_helper'
 describe 'mdb.indexes.js' do
   let(:lib_path) { File.expand_path('../../lib/mdb.indexes.js', __FILE__) }
 
-  describe 'function total_index_size_per_collection()' do
+  describe 'total_index_size_per_collection()' do
     specify 'defined in mongo shell' do
       exec = run_mongo 'typeof(total_index_size_per_collection);'
 
@@ -22,9 +22,9 @@ describe 'mdb.indexes.js' do
     end
   end
 
-  describe 'ls_single_index_collections' do
+  describe 'single_index_collections()' do
     specify 'defined in mongo shell' do
-      exec = run_mongo 'typeof(total_index_size_per_collection);'
+      exec = run_mongo 'typeof(single_index_collections);'
 
       exec.should eq 'function'
     end
