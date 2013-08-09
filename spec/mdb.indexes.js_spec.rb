@@ -13,12 +13,12 @@ describe 'mdb.indexes.js' do
     specify 'returns the list of index sizes per collection sorted by size desc' do
       run_mongo('var objects = []; for(var i = 0; i < 1000; ++i) { objects.push({ key: i }); }; db.test.insert(objects); db.test.ensureIndex( { key: 1 } );')
 
-      result = run_mongo 'printjson(total_index_size_per_collection());'
+      out = run_mongo 'printjson(total_index_size_per_collection());'
 
-      puts result
-      result.should include '"collection" : "test"'
-      result.should include '"collection" : "system.indexes"'
-      result.should include '"MB" : "0.000"'
+      puts out
+      out.should include '"collection" : "test"'
+      out.should include '"collection" : "system.indexes"'
+      out.should include '"MB" : "0.000"'
     end
   end
 
@@ -27,6 +27,13 @@ describe 'mdb.indexes.js' do
       exec = run_mongo 'typeof(single_index_collections);'
 
       exec.should eq 'function'
+    end
+
+    specify 'returns the list of collections with a single index' do
+      out = run_mongo 'printjson(single_index_collections());'
+
+      puts out
+      out.should include '"collection" : "test"'
     end
   end
 end
