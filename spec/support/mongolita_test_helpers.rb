@@ -1,8 +1,6 @@
 # encoding: utf-8
 
 module MongolitaTestHelpers
-  @@shell_strip = /MongoDB shell version:.*?connecting to: test/m
-
   def eval_mongo exec_script
     cmd = %Q{
       #{$mongod.db_path}/mongo --eval "
@@ -17,7 +15,7 @@ module MongolitaTestHelpers
   private
 
   def strip_noise
-    @response[@@shell_strip] = '' if @response.match @@shell_strip
+    @response[TRIM] = '' if @response.match TRIM
     @response.strip
   end
 
@@ -41,3 +39,5 @@ module MongolitaTestHelpers
   end
 
 end
+
+MongolitaTestHelpers.const_set(:TRIM, /MongoDB shell version:.*?connecting to: test/m)
