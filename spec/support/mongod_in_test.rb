@@ -1,4 +1,4 @@
-# encoding: utf-8$
+# encoding: utf-8
 
 class MongodInTest < Hash
   def run
