@@ -1,9 +1,11 @@
+"use strict";
+
 (function() {
   this.default_host    = 'localhost';
   this.default_port    = 27017;
   this.default_db_name = 'test';
 
-  this.mongodb_connect = function mongodb_connect(host, port, db_name, callback_fn) {
+  this.mongodb_connect = function(host, port, db_name, callback_fn) {
     this.default_db = connect(host + ':' + port);
     this.working_db = this.default_db.getSisterDB(db_name);
 

@@ -3,9 +3,9 @@ require_relative 'spec_helper'
 describe 'mdb.indexes.js' do
   let(:lib_path) { File.expand_path('../../lib/mdb.indexes.js', __FILE__) }
 
-  describe 'total_index_size_per_collection()' do
+  describe 'Mongolita.total_index_size_per_collection()' do
     specify 'defined in mongo shell' do
-      exec = eval_mongo 'typeof(total_index_size_per_collection);'
+      exec = eval_mongo 'typeof(Mongolita.total_index_size_per_collection);'
 
       exec.should eq 'function'
     end
@@ -22,7 +22,7 @@ describe 'mdb.indexes.js' do
     specify 'returns the list of index sizes per collection sorted by size desc' do
       eval_mongo js_insert
 
-      out = eval_mongo 'printjson(total_index_size_per_collection());'
+      out = eval_mongo 'printjson(Mongolita.total_index_size_per_collection());'
 
       puts out
       out.should include '"collection" : "test"'
@@ -33,7 +33,7 @@ describe 'mdb.indexes.js' do
 
   describe 'single_index_collections()' do
     specify 'defined in mongo shell' do
-      out = eval_mongo 'typeof(single_index_collections);'
+      out = eval_mongo 'typeof(Mongolita.single_index_collections);'
 
       out.should eq 'function'
     end
@@ -43,7 +43,7 @@ describe 'mdb.indexes.js' do
     specify 'returns the list of collections with a single index' do
       eval_mongo drop_index_js
 
-      out = eval_mongo 'printjson(single_index_collections());'
+      out = eval_mongo 'printjson(Mongolita.single_index_collections());'
 
       puts out
       out.should include '"collection" : "test"'
